@@ -28,9 +28,9 @@ namespace Calculate {
                 Console.WriteLine("Enter expression:");
                 String mathExpression = Console.ReadLine( );
                 float[ ] numbers = new float[10];
-                int index = 0;
-                String number = "";
                 String operation = "a";
+                String number = "";
+                int index = 0;
                 float result = 0;
                 for (int i = 0; i < mathExpression.Length; i++) {
                     if (mathExpression[i].ToString( ) == "-" && number == "") {
