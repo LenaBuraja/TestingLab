@@ -25,6 +25,7 @@ namespace Calculate {
 
         static void Main(string[ ] args) {
             while (true) {
+                Console.WriteLine("I use revert to cancel the comment");
                 Console.WriteLine("Enter expression:");
                 String mathExpression = Console.ReadLine( );
                 float[ ] numbers = new float[10];
