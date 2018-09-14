@@ -24,7 +24,6 @@ namespace Calculate {
         }
 
         static void Main(string[ ] args) {
-            for (;;) {
                 Console.WriteLine("Enter expression:");
                 String mathExpression = Console.ReadLine( );
                 float[ ] numbers = new float[10];
@@ -54,7 +53,6 @@ namespace Calculate {
                 if (operation == "+") result = summary(numbers[0], numbers[1]);
                 if (operation == "-") result = difference(numbers[0], numbers[1]);
                 if (operation != "a") Console.WriteLine(result);
-            }
         }
     }
 }
