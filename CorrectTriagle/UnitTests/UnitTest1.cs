@@ -69,7 +69,7 @@ namespace UnitTests {
         public void FewerBorders( ) {
             bool result;
             try {
-                result = isCorrectTriagle(4, (float)2.9999999999999, 7);
+                result = isCorrectTriagle(4, (float)2.99999, 7);
                 Assert.AreEqual(result, false);
             } catch (Exception e) {
                 Assert.Fail("Exception not expected");
@@ -80,7 +80,7 @@ namespace UnitTests {
         public void MoreBorders( ) {
             bool result;
             try {
-                result = isCorrectTriagle(4, (float)3.0000000000009, 7);
+                result = isCorrectTriagle(4, (float)3.00009, 7);
                 Assert.AreEqual(result, true);
             } catch (Exception e) {
                 Assert.Fail("Exception not expected");
