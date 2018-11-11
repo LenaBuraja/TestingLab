@@ -8,15 +8,19 @@ namespace PageObjectFactory.PageObject
     class StartPage
     {
         [FindsBy(How = How.XPath, Using = "//input[@id='origin_name']")]
-        IWebElement originName;
+        private IWebElement originName;
         [FindsBy(How = How.XPath, Using = "//input[@id='destination_name']")]
-        IWebElement destinationName;
+        private IWebElement destinationName;
         [FindsBy(How = How.XPath, Using = "//input[@id='depart_date']")]
-        IWebElement departDate;
+        private IWebElement departDate;
         [FindsBy(How = How.XPath, Using = "//input[@id='return_date']")]
-        IWebElement returnDate;
+        private IWebElement returnDate;
         [FindsBy(How = How.XPath, Using = "//div[@class='ticket-action-airline-container']/a")]
-        IWebElement elements;
+        private IWebElement elements;
+        [FindsBy(How = How.XPath, Using = "//span[@class='avs_ac_iata'][contains(.,'MSQ')]")]
+        private IWebElement airportOrigin;
+        [FindsBy(How = How.XPath, Using = "//span[@class='avs_ac_iata'][contains(.,'PAR')]")]
+        private IWebElement airportDestination;
 
         private IWebDriver driver;
 
@@ -36,12 +40,10 @@ namespace PageObjectFactory.PageObject
         {
             originName.SendKeys(cityOrigin);
             originName.Click();
-            originName.SendKeys(Keys.Down);
-            originName.Click();
+            airportOrigin.Click();
             destinationName.SendKeys(cityDestination);
             destinationName.Click();
-            destinationName.SendKeys(Keys.Down);
-            destinationName.Click();
+            airportDestination.Click();
             DateTime dateCurent = DateTime.Today;
             DateTime dateDepart = dateCurent.AddMonths(1);
             DateTime dateReturn = dateDepart.AddDays(3);

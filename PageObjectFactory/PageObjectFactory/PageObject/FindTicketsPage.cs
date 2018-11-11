@@ -11,29 +11,46 @@ namespace PageObjectFactory.PageObject
     class FindTicketsPage
     {
         [FindsBy(How = How.XPath, Using = "//section[@class='flight-brief-layovers']")]
-        IList<IWebElement> ticketDirectFlight;
+        private IList<IWebElement> ticketDirectFlight;
         [FindsBy(How = How.XPath, Using = "//div[@class='bags-info']")]
-        IList<IWebElement> ticketWithBaggage;
+        private IList<IWebElement> ticketWithBaggage;
+        [FindsBy(How = How.XPath, Using = "//label[@for='baggage_filter']")]
+        private IWebElement labelBaggageFilter;
+        [FindsBy(How = How.XPath, Using = "//label[@for='baggage_filter_1']")]
+        private IWebElement filterBaggageAndBags;
+        [FindsBy(How = How.XPath, Using = "//label[@for='stops_count_filter']")]
+        private IWebElement filterStopsCount;
+        [FindsBy(How = How.XPath, Using = "//label[@for='stops_count_filter_0']")]
+        private IWebElement filterDirectFlight;
+        [FindsBy(How = How.XPath, Using = "//div[@class='title title-dropdown semibold closed'][contains(.,'Авиакомпании')]")]
+        private IWebElement listAircompany;
+        [FindsBy(How = How.XPath, Using = "//label[@for='airlines_filter']")]
+        private IWebElement filterAircompany;
+        [FindsBy(How = How.XPath, Using = "//label[@class='label-block name airlines-label g-text-overflow'][contains(.,'БелавиаТолько')]")]
+        private IWebElement filterAircompanyBelavia;
+        [FindsBy(How = How.XPath, Using = "//img[@src='/images/airline/120/35/gravity=west/B2@2x.png']")]
+        private IList<IWebElement> listTicketFilterByAircompany;
+        [FindsBy(How = How.XPath, Using = "//div[@class='ticket-scroll-container']")]
+        private IList<IWebElement> listTicketAll;
 
         private IWebDriver driver;
 
         public FindTicketsPage(IWebDriver _driver)
         {
-            //IWebDriver driver = Browser.OpenBrowser();
             this.driver = _driver;
             PageFactory.InitElements(driver, this);
         }
 
         public void FilterBaggage()
         {
-            driver.FindElement(By.XPath("//label[@for='baggage_filter']")).Click();
-            driver.FindElement(By.XPath("//label[@for='baggage_filter_1']")).Click();
+            labelBaggageFilter.Click();
+            filterBaggageAndBags.Click();
         }
 
         public void FilterFlight()
         {
-            driver.FindElement(By.XPath("//label[@for='stops_count_filter']")).Click();
-            driver.FindElement(By.XPath("//label[@for='stops_count_filter_0']")).Click();
+            filterStopsCount.Click();
+            filterDirectFlight.Click();
         }
 
 
@@ -62,6 +79,22 @@ namespace PageObjectFactory.PageObject
                 }
             }
             return true;
+        }
+
+        public void filterAirport()
+        {
+            listAircompany.Click();
+            filterAircompany.Click();
+            filterAircompanyBelavia.Click();
+            ///images/airline/120/35/gravity=west/OS@2x.png
+            ///images/airline/120/35/gravity=west/B2@2x.png
+        }
+
+        public bool isRightAircompany()
+        {
+            int countTicket = listTicketFilterByAircompany.Count;
+            int countTicketExpected = listTicketAll.Count;
+            return countTicket == countTicketExpected;
         }
 
         public IWebDriver getDriver()

@@ -9,7 +9,7 @@ namespace PageObjectFactory
     [TestFixture]
     public class TestSite
     {
-        [Test]
+        /*[Test]
         public void DirectFlight()
         {
             StartPage page = new StartPage();
@@ -28,6 +28,18 @@ namespace PageObjectFactory
             FindTicketsPage result = new FindTicketsPage(page.getDriver());
             result.FilterBaggage();
             Assert.AreEqual(result.isWithBaggage(), true);
-            Browser.CloseBrowser(result.getDriver());        }
+            Browser.CloseBrowser(result.getDriver());
+         }*/
+
+        [Test]
+        public void SelectAircompany()
+        {
+            StartPage page = new StartPage();
+            page.FillInForm("Минск", "Париж");
+            FindTicketsPage result = new FindTicketsPage(page.getDriver());
+            result.filterAirport();
+            Assert.AreEqual(result.isRightAircompany(), true);
+            Browser.CloseBrowser(result.getDriver());
+        }
     }
 }
