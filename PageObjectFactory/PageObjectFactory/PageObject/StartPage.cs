@@ -21,10 +21,14 @@ namespace PageObjectFactory.PageObject
         private IWebElement airportOrigin;
         [FindsBy(How = How.XPath, Using = "//span[@class='avs_ac_iata'][contains(.,'PAR')]")]
         private IWebElement airportDestination;
+        [FindsBy(How = How.XPath, Using = "//div[@class='indexFormBg']")]
+        private IWebElement form;
+        [FindsBy(How = How.XPath, Using = "//input[@id='submit']")]
+        private IWebElement buttonSearch;
 
         private IWebDriver driver;
 
-        public StartPage(/*IWebDriver _driver*/)
+        public StartPage()
         {
             IWebDriver _driver = Browser.OpenBrowser();
             this.driver = _driver;
@@ -36,7 +40,7 @@ namespace PageObjectFactory.PageObject
             return driver;
         }
 
-        public void FillInForm(string cityOrigin, string cityDestination)
+        public void setCitiesOriginAndDestination(string cityOrigin, string cityDestination)
         {
             originName.SendKeys(cityOrigin);
             originName.Click();
@@ -44,16 +48,27 @@ namespace PageObjectFactory.PageObject
             destinationName.SendKeys(cityDestination);
             destinationName.Click();
             airportDestination.Click();
+        }
+
+        public void setDate(IWebElement fieldDate, DateTime valueDate)
+        {
+            fieldDate.Clear();
+            fieldDate.SendKeys(valueDate.ToString("yyyy-MM-dd"));            
+        }
+
+        public void clickButtonSearch()
+        {
+            form.Click();
+            buttonSearch.Click();
+        }
+
+        public void FillInForm(string cityOrigin, string cityDestination)
+        {
+            this.setCitiesOriginAndDestination(cityOrigin, cityDestination);
             DateTime dateCurent = DateTime.Today;
-            DateTime dateDepart = dateCurent.AddMonths(1);
-            DateTime dateReturn = dateDepart.AddDays(3);
-            departDate.Clear();
-            departDate.SendKeys(dateDepart.ToString("yyyy-MM-dd"));
-            returnDate.Clear();
-            returnDate.SendKeys(dateReturn.ToString("yyyy-MM-dd"));
-            returnDate.Click();
-            driver.FindElement(By.XPath("//div[@class='indexFormBg']")).Click();
-            driver.FindElement(By.XPath("//input[@id='submit']")).Click();
+            this.setDate(departDate, dateCurent.AddMonths(1));
+            this.setDate(returnDate, dateCurent.AddMonths(1).AddDays(3));
+            this.clickButtonSearch();
         }
     }
 }

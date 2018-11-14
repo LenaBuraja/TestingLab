@@ -9,37 +9,37 @@ namespace PageObjectFactory
     [TestFixture]
     public class TestSite
     {
-        /*[Test]
+        [Test]
         public void DirectFlight()
         {
-            StartPage page = new StartPage();
-            page.FillInForm("Минск", "Париж");
-            FindTicketsPage result = new FindTicketsPage(page.getDriver());
-            result.FilterFlight();
-            Assert.AreEqual(result.isNotDirectFlight(), false);
-            Browser.CloseBrowser(result.getDriver());
+            StartPage startPage = new StartPage();
+            startPage.FillInForm("Минск", "Париж");
+            FindTicketsPage findTicketsPage = new FindTicketsPage(startPage.getDriver());
+            findTicketsPage.FilterFlight();
+            Assert.IsTrue(!findTicketsPage.isNotDirectFlight());
+            Browser.CloseBrowser(findTicketsPage.getDriver());
         }
         
         [Test]
         public void TypeBaggage()
         {
-            StartPage page = new StartPage();
-            page.FillInForm("Минск", "Париж");
-            FindTicketsPage result = new FindTicketsPage(page.getDriver());
-            result.FilterBaggage();
-            Assert.AreEqual(result.isWithBaggage(), true);
-            Browser.CloseBrowser(result.getDriver());
-         }*/
+            StartPage startPage = new StartPage();
+            startPage.FillInForm("Минск", "Париж");
+            FindTicketsPage findTicketsPage = new FindTicketsPage(startPage.getDriver());
+            findTicketsPage.FilterBaggage();
+            Assert.IsTrue(findTicketsPage.isWithBaggage());
+            Browser.CloseBrowser(findTicketsPage.getDriver());
+         }
 
         [Test]
         public void SelectAircompany()
         {
-            StartPage page = new StartPage();
-            page.FillInForm("Минск", "Париж");
-            FindTicketsPage result = new FindTicketsPage(page.getDriver());
-            result.filterAirport();
-            Assert.AreEqual(result.isRightAircompany(), true);
-            Browser.CloseBrowser(result.getDriver());
+            StartPage startPage = new StartPage();
+            startPage.FillInForm("Минск", "Париж");
+            FindTicketsPage findTicketsPage = new FindTicketsPage(startPage.getDriver());
+            findTicketsPage.filterAirport();
+            Assert.IsTrue(findTicketsPage.isRightAircompany());
+            Browser.CloseBrowser(findTicketsPage.getDriver());
         }
     }
 }

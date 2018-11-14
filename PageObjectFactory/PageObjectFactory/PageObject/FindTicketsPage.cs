@@ -10,7 +10,7 @@ namespace PageObjectFactory.PageObject
 {
     class FindTicketsPage
     {
-        [FindsBy(How = How.XPath, Using = "//section[@class='flight-brief-layovers']")]
+        [FindsBy(How = How.XPath, Using = "//section[@class='flight-brief-layovers'][contains(.,'ПРЯМОЙ ПЕРЕЛЁТ')]")]
         private IList<IWebElement> ticketDirectFlight;
         [FindsBy(How = How.XPath, Using = "//div[@class='bags-info']")]
         private IList<IWebElement> ticketWithBaggage;
@@ -56,14 +56,7 @@ namespace PageObjectFactory.PageObject
 
         public bool isNotDirectFlight()
         {
-            foreach (IWebElement elem in ticketDirectFlight)
-            {
-                if (elem.Displayed && !elem.Text.Contains("ПРЯМОЙ ПЕРЕЛЁТ"))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ticketDirectFlight.Count == listTicketAll.Count;
         }
 
         public bool isWithBaggage()
@@ -74,10 +67,10 @@ namespace PageObjectFactory.PageObject
                 var handbags = elem.FindElement(By.XPath("./div[@class='bags-info__icons bags-info__icons--handbags']/i")).GetAttribute("class");
                 if (baggage.Contains("without-baggage") && handbags.Contains("unknown-handbags"))
                 {
-                    //Console.WriteLine(handbags + " **** " + baggage);
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -86,15 +79,11 @@ namespace PageObjectFactory.PageObject
             listAircompany.Click();
             filterAircompany.Click();
             filterAircompanyBelavia.Click();
-            ///images/airline/120/35/gravity=west/OS@2x.png
-            ///images/airline/120/35/gravity=west/B2@2x.png
         }
 
         public bool isRightAircompany()
         {
-            int countTicket = listTicketFilterByAircompany.Count;
-            int countTicketExpected = listTicketAll.Count;
-            return countTicket == countTicketExpected;
+            return listTicketFilterByAircompany.Count == listTicketAll.Count;
         }
 
         public IWebDriver getDriver()
