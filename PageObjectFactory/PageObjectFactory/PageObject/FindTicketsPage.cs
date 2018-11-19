@@ -63,8 +63,8 @@ namespace PageObjectFactory.PageObject
         {
             foreach (IWebElement elem in ticketWithBaggage)
             {
-                var baggage = elem.FindElement(By.XPath("./div[@class='bags-info__icons bags-info__icons--baggage']/i")).GetAttribute("class");
-                var handbags = elem.FindElement(By.XPath("./div[@class='bags-info__icons bags-info__icons--handbags']/i")).GetAttribute("class");
+                var baggage = elem.FindElement(By.XPath("./div[@class='bags-info__icons--baggage']/i")).GetAttribute("class");
+                var handbags = elem.FindElement(By.XPath("./div[@class='bags-info__icons--handbags']/i")).GetAttribute("class");
                 if (baggage.Contains("without-baggage") && handbags.Contains("unknown-handbags"))
                 {
                     return false;
