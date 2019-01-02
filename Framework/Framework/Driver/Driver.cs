@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-
+using System;
 
 namespace Framework.Driver
 {
@@ -15,6 +15,7 @@ namespace Framework.Driver
             if (driver == null)
             {
                 driver = new FirefoxDriver();
+                driver.Manage().Timeouts().ImplicitWait.Add(TimeSpan.FromSeconds(300));
             }
             return driver;
         }

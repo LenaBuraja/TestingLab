@@ -50,7 +50,6 @@
     <Compile Include="Pages\FindTicketsPage.cs" />
     <Compile Include="Pages\StartPage.cs" />
     <Compile Include="Steps\Steps.cs" />
-    <Compile Include="TestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Tests.cs" />
   </ItemGroup>

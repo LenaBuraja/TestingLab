@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Framework.Tests
@@ -10,14 +11,6 @@ namespace Framework.Tests
         private Steps.Steps steps = new Steps.Steps();
         private const string CITY_ORIGIN = "Минск";
         private const string CITY_DISTINATION = "Париж";
-
-
-        [FindsBy(How = How.XPath, Using = "//section[@class='flight-brief-layovers']")]
-        private IList<IWebElement> ticketsDirectFlight;
-        [FindsBy(How = How.XPath, Using = "//div[@class='bags-info']")]
-        private IList<IWebElement> ticketsWithBaggage;
-        [FindsBy(How = How.XPath, Using = "//div[contains(@class,'ticket-action-airline-container')]")]
-        private IList<IWebElement> ticketsAircompanyBelavia;
 
         [SetUp]
         public void Init()
@@ -31,53 +24,94 @@ namespace Framework.Tests
             steps.CloseBrowser();
         }
 
-        [Test]
+        [Test] //6
         public void DisplayFoundFlightsDirectFlight()
         {
             steps.FillInForm(CITY_ORIGIN, CITY_DISTINATION);
             steps.FilterFlightInFindTicketsPage();
-            SoftAssert ticketsWithDirectFligtAssert = new SoftAssert();
-            foreach (IWebElement elem in ticketsDirectFlight)
-            {
-                ticketsWithDirectFligtAssert.IsTrue(elem.Displayed && !elem.Text.Contains("ПРЯМОЙ ПЕРЕЛЁТ"));
-            }
-            ticketsWithDirectFligtAssert.VerifyAll();
+            Assert.IsTrue(steps.isAllTicketsWithDirectFlight());
         }
 
-        [Test]
+        [Test] //2
         public void SearchForAirticketsWithLuggage()
         {
             steps.FillInForm(CITY_ORIGIN, CITY_DISTINATION);
-            steps.FilterBaggageInFindTicketsPage();
-            SoftAssert ticketsWithLaggageAndBagsAssert = new SoftAssert();
-            foreach (IWebElement elem in ticketsWithBaggage)
-            {
-                if (elem.Displayed)
-                {
-                    var luggage = elem.FindElement(By.XPath("./div[@class='bags-info__icons--baggage']/i")).GetAttribute("class");
-                    var handbags = elem.FindElement(By.XPath("./div[@class='bags-info__icons--handbags']/i")).GetAttribute("class");
-                    ticketsWithLaggageAndBagsAssert.isTrue(luggage.Contains("without-baggage") && handbags.Contains("unknown-handbags"));
-                }
-            }
-            ticketsWithLaggageAndBagsAssert.VerifyAll();
+            steps.FilterLuggageInFindTicketsPage();
+            Assert.IsTrue(steps.isAllTicketsWithoutBag() && steps.isAllTicketsWithoutLuggage());
         }
 
-        [Test]
+        [Test] //5
         public void DisplayFoundAirticketsAirlineBelavia()
         {
             steps.FillInForm(CITY_ORIGIN, CITY_DISTINATION);
             steps.FilterAirportInFindTicketsPage();
-            SoftAssert ticketsWithLaggageAndBagsAssert = new SoftAssert();
-            foreach (IWebElement elem in ticketsAircompanyBelavia)
-            {
-                if(elem.Displayed)
-                {
-                    var srcImageAirCompany = elem.FindElement(By.XPath("//img")).GetAttribute("src");
-                    ticketsWithLaggageAndBagsAssert.AreEquals(srcImageAirCompany, "/images/airline/120/35/gravity=west/B2@2x.png");
-                }
-            }
-            ticketsWithLaggageAndBagsAssert.VerifyAll();
+            Assert.IsTrue(steps.isAllTicketsWithoutUrlImage());
         }
+
+        [Test] //3
+        public void AutocorrectionReturnDateFieldWhenChangingDepartureDateWithFlagBackAndForth()
+        {
+            List<string> listDates = steps.GetDates();
+            DateTime returnDate = DateTime.Parse(listDates[0]);
+            DateTime departDate = DateTime.Parse(listDates[1]);
+            Assert.IsTrue(returnDate > departDate);
+        }
+
+        [Test] //1
+        public void FoundTicketsAccordanceSpecifiedClass()
+        {
+            ////div[@class="whideSelect"]/*/div[@class="whideSelect"]/ul/li
+            List<string> listDates = steps.GetDates();
+            DateTime returnDate = DateTime.Parse(listDates[0]);
+            DateTime departDate = DateTime.Parse(listDates[1]);
+            Assert.IsTrue(returnDate > departDate);
+        }
+
+        [Test] //4 FoundTicketsAccordanceSpecifiedPriceRange
+        public void FoundTicketsAccordanceSpecifiedPriceRange()
+        {
+            List<string> listDates = steps.GetDates();
+            DateTime returnDate = DateTime.Parse(listDates[0]);
+            DateTime departDate = DateTime.Parse(listDates[1]);
+            Assert.IsTrue(returnDate > departDate);
+        }
+
+        [Test] //7 FoundFlightsAccordanceSpecifiedTimeRange
+        public void FoundFlightsAccordanceSpecifiedTimeRange()
+        {
+            List<string> listDates = steps.GetDates();
+            DateTime returnDate = DateTime.Parse(listDates[0]);
+            DateTime departDate = DateTime.Parse(listDates[1]);
+            Assert.IsTrue(returnDate > departDate);
+        }
+
+        [Test] //8 ImplementationOfSearchTicketForSpecialsOffer
+        public void ImplementationOfSearchTicketForSpecialsOffer()
+        {
+            List<string> listDates = steps.GetDates();
+            DateTime returnDate = DateTime.Parse(listDates[0]);
+            DateTime departDate = DateTime.Parse(listDates[1]);
+            Assert.IsTrue(returnDate > departDate);
+        }
+
+        [Test] //9 ExcessOfBabiesOverAdultsWhenSearchingForAirtickets
+        public void ExcessOfBabiesOverAdultsWhenSearchingForAirtickets()
+        {
+            List<string> listDates = steps.GetDates();
+            DateTime returnDate = DateTime.Parse(listDates[0]);
+            DateTime departDate = DateTime.Parse(listDates[1]);
+            Assert.IsTrue(returnDate > departDate);
+        }
+
+        [Test] //10 RightPricesWhenMonitoringPrices
+        public void RightPricesWhenMonitoringPrices()
+        {
+            List<string> listDates = steps.GetDates();
+            DateTime returnDate = DateTime.Parse(listDates[0]);
+            DateTime departDate = DateTime.Parse(listDates[1]);
+            Assert.IsTrue(returnDate > departDate);
+        }
+
 
     }
 }
